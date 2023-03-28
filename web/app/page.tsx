@@ -1,63 +1,52 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   Box,
   Button,
+  Card,
+  CardBody,
   Container,
   Flex,
   Heading,
   Icon,
+  Image,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 
 import Page from "components/modules/Page";
+import { MovieData } from "constants/types";
+import MovieCard from "components/foundation/MovieCard";
 
 export default function Home() {
+  const [movieData, setMovieData] = useState<MovieData>({});
+  const [watchlistData, setWatchlistData] = useState<MovieData>({});
+  const [showWatchlist, setShowWatchlist] = useState(false);
+
   return (
-    <Page>
-      <Flex flexWrap="wrap" gridGap={6} justify="center">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-          <Card
-            heading={"Heading"}
-            description={"Lorem ipsum dolor sit amet catetur, adipisicing elit."}
-            href={"#"}
-            key={num}
-          />
-        ))}
+    <Page
+      searchHandler={showWatchlist ? setWatchlistData : setMovieData}
+      viewToggle={showWatchlist}
+      setToggle={setShowWatchlist}
+    >
+      <Flex flexWrap="wrap" gridGap={6} justify="center" mb={10}>
+        {movieData &&
+          "Search" in movieData &&
+          movieData["Search"].map(({ imdbID, Poster: posterUrl, Title: title }) => (
+            <MovieCard heading={title} imageUrl={posterUrl} key={imdbID} />
+          ))}
+        {!movieData["Search"] && (
+          <Stack align="center" mt={10}>
+            <Heading color="whiteAlpha.900">Welcome!</Heading>
+            <Text color="whiteAlpha.900">
+              Please start typing in the search bar above to find movies
+            </Text>
+          </Stack>
+        )}
       </Flex>
     </Page>
   );
 }
-
-interface CardProps {
-  heading: string;
-  description: string;
-  href: string;
-}
-
-const Card = ({ heading, description, href }: CardProps) => {
-  return (
-    <Box
-      maxW={{ base: "full", md: "275px" }}
-      w={"full"}
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={5}
-    >
-      <Stack align={"start"} spacing={2}>
-        <Box mt={2}>
-          <Heading size="md">{heading}</Heading>
-          <Text mt={1} fontSize={"sm"}>
-            {description}
-          </Text>
-        </Box>
-        <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
-          Learn more
-        </Button>
-      </Stack>
-    </Box>
-  );
-};

@@ -30,8 +30,9 @@ import {
 
 import Desktop from "components/foundation/Navigation/Desktop";
 import Mobile from "components/foundation/Navigation/Mobile";
+import { CommonProps } from "constants/types";
 
-const AppBar = () => {
+const AppBar = ({ searchHandler, setToggle, viewToggle = false }: CommonProps) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -58,7 +59,7 @@ const AppBar = () => {
           />
         </Flex>
         <Container maxW="container.xl">
-          <Desktop />
+          <Desktop searchHandler={searchHandler} setToggle={setToggle} viewToggle={viewToggle} />
         </Container>
       </Flex>
 
