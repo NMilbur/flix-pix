@@ -9,6 +9,7 @@ import {
   Stack,
   Collapse,
   Icon,
+  Input,
   Link,
   Popover,
   PopoverTrigger,
@@ -17,8 +18,15 @@ import {
   useBreakpointValue,
   useDisclosure,
   Container,
+  Heading,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  HamburgerIcon,
+  CloseIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  StarIcon,
+} from "@chakra-ui/icons";
 
 import Desktop from "components/foundation/Navigation/Desktop";
 import Mobile from "components/foundation/Navigation/Mobile";
@@ -27,17 +35,14 @@ const AppBar = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box>
+    <Box bgGradient={"linear(to-t, yellow.400 0%, yellow.200 30%)"}>
       <Flex
-        bg={useColorModeValue("white", "gray.800")}
-        color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
+        color="blackAlpha.900"
+        minH={"70px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
+        justifyContent={"space-between"}
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -46,25 +51,14 @@ const AppBar = () => {
         >
           <IconButton
             onClick={onToggle}
+            color="blackAlpha.900"
             icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
             variant={"ghost"}
             aria-label={"Toggle Navigation"}
           />
         </Flex>
         <Container maxW="container.xl">
-          <Flex flex={{ base: 1 }} justify={{ base: "space-b", md: "start" }}>
-            <Text
-              textAlign={useBreakpointValue({ base: "center", md: "left" })}
-              fontFamily={"heading"}
-              color={useColorModeValue("gray.800", "white")}
-            >
-              Flix Pix
-            </Text>
-
-            <Flex display={{ base: "none", md: "flex" }} ml={10}>
-              <Desktop />
-            </Flex>
-          </Flex>
+          <Desktop />
         </Container>
       </Flex>
 

@@ -11,7 +11,6 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { ReactElement } from "react";
 
 import Page from "components/modules/Page";
 

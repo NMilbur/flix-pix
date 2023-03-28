@@ -1,31 +1,39 @@
-import { Box, Link, Stack, useColorModeValue, useBreakpointValue } from "@chakra-ui/react";
-import { NAV_ITEMS } from "../constants";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Input,
+  Link,
+  Stack,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { StarIcon } from "@chakra-ui/icons";
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
-  const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const linkColor = "blackAlpha.900";
+  const linkHoverColor = "gray.600";
 
   return (
-    <Stack direction={"row"} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Link
-            p={2}
-            href={navItem.href ?? "#"}
-            fontSize={"sm"}
-            fontWeight={500}
-            color={linkColor}
-            _hover={{
-              textDecoration: "none",
-              color: linkHoverColor,
-            }}
-          >
-            {navItem.label}
-          </Link>
-        </Box>
-      ))}
-    </Stack>
+    <Flex flex={{ base: 1 }} justify="space-between">
+      <Heading textAlign={useBreakpointValue({ base: "center", md: "left" })}>Flix Pix</Heading>
+
+      <Input
+        placeholder="Enter a movie title"
+        _placeholder={{ color: "whiteAlpha.900" }}
+        maxWidth="50%"
+        variant="outlined"
+        color="whiteAlpha.900"
+        _hover={{
+          textDecoration: "none",
+        }}
+      />
+
+      <Button leftIcon={<StarIcon />} variant="solid" colorScheme="gray">
+        Saved Movies
+      </Button>
+    </Flex>
   );
 };
 

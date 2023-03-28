@@ -10,7 +10,12 @@ interface PageProps {
 
 const Page = ({ children }: PageProps) => {
   return (
-    <Flex flexDirection="column" rowGap={10}>
+    <Flex
+      flexDirection="column"
+      rowGap={10}
+      height="100%"
+      bgGradient={"linear(to-t, gray.900 0%, gray.600 80%, yellow.400 95%)"}
+    >
       <AppBar />
       <Container maxW="container.xl">{children}</Container>
     </Flex>
