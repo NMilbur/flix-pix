@@ -1,14 +1,20 @@
 import { LOCAL_STORAGE_KEY, WATCHED_STORAGE_KEY } from "constants/core";
 import { WatchlistData } from "constants/types";
 
-const getTracker = (key: string) => {
-  const stored = window.localStorage.getItem(key);
+const windowCheck = () => typeof window !== undefined;
 
-  return stored ? JSON.parse(stored) : [];
+const getTracker = (key: string) => {
+  if (windowCheck()) {
+    const stored = window.localStorage.getItem(key);
+
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  return [];
 };
 
 const setTracker = (key: string, data: unknown[]) =>
-  window.localStorage.setItem(key, JSON.stringify(data));
+  windowCheck() ? window.localStorage.setItem(key, JSON.stringify(data)) : null;
 
 export const getWatchlistMovies = () => getTracker(LOCAL_STORAGE_KEY);
 
