@@ -18,7 +18,7 @@ const options: ReqOptions = {
   method: "GET",
   url: `https://${HOST}`,
   headers: {
-    "X-RapidAPI-Key": API_KEY,
+    "X-RapidAPI-Key": API_KEY!,
     "X-RapidAPI-Host": HOST,
   },
   params: { s: "", r: "json" },

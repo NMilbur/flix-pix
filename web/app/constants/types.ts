@@ -6,8 +6,15 @@ export type MovieData = {
   }[];
 };
 
+export type WatchlistData = {
+  imdbID: string;
+  imageUrl: string;
+  title: string;
+};
+
 export interface CommonProps {
-  searchHandler?: (value: MovieData) => void;
+  searchHandler: ((value: MovieData) => void) | ((value: WatchlistData[]) => void);
   setToggle?: (value: boolean) => void;
   viewToggle?: boolean;
+  watchlistData: WatchlistData[];
 }
