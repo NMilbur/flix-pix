@@ -1,3 +1,4 @@
+/*
 import { LOCAL_STORAGE_KEY, WATCHED_STORAGE_KEY } from "constants/core";
 import { WatchlistData } from "constants/types";
 
@@ -24,3 +25,4 @@ export const setWatchlistMovies = (watchlistData: WatchlistData[]) =>
 export const getWatchedMovies = () => getTracker(WATCHED_STORAGE_KEY);
 
 export const setWatchedMovies = (ids: string[]) => setTracker(WATCHED_STORAGE_KEY, ids);
+*/

@@ -6,28 +6,36 @@ import { Divider, Flex, Heading, Stack } from "@chakra-ui/react";
 
 import Page from "components/modules/Page";
 import { MovieData, WatchlistData } from "constants/types";
-import {
-  getWatchedMovies,
-  getWatchlistMovies,
-  setWatchedMovies,
-  setWatchlistMovies,
-} from "utils/core";
 import AllMovies from "components/modules/AllMovies";
 import Watchlist from "components/modules/Watchlist";
+import { LOCAL_STORAGE_KEY, WATCHED_STORAGE_KEY } from "constants/core";
 
 export default function Home() {
   const [movieData, setMovieData] = useState<MovieData>({});
-  const [watchlistData, setWatchlistData] = useState<WatchlistData[]>(getWatchlistMovies());
+  const [watchlistData, setWatchlistData] = useState<WatchlistData[]>([]);
   const [filteredWatchlist, setFilteredWatchlist] = useState<WatchlistData[]>([]);
-  const [watchedList, setWatchedList] = useState<string[]>(getWatchedMovies());
+  const [watchedList, setWatchedList] = useState<string[]>([]);
   const [showWatchlist, setShowWatchlist] = useState(false);
 
   useEffect(() => {
-    setWatchlistMovies(watchlistData);
+    const storedWatchlist = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const storedWatchedIds = window.localStorage.getItem(WATCHED_STORAGE_KEY);
+
+    if (storedWatchlist) {
+      setWatchlistData(JSON.parse(storedWatchlist));
+    }
+
+    if (storedWatchedIds) {
+      setWatchedList(JSON.parse(storedWatchedIds));
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(watchlistData));
   }, [watchlistData]);
 
   useEffect(() => {
-    setWatchedMovies(watchedList);
+    window.localStorage.setItem(WATCHED_STORAGE_KEY, JSON.stringify(watchedList));
   }, [watchedList]);
 
   return (
