@@ -1,52 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  Container,
-  Flex,
-  Heading,
-  Icon,
-  Image,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Divider, Flex, Heading, Stack } from "@chakra-ui/react";
 
 import Page from "components/modules/Page";
-import { MovieData } from "constants/types";
-import MovieCard from "components/foundation/MovieCard";
+import { MovieData, WatchlistData } from "constants/types";
+import {
+  getWatchedMovies,
+  getWatchlistMovies,
+  setWatchedMovies,
+  setWatchlistMovies,
+} from "utils/core";
+import AllMovies from "components/modules/AllMovies";
+import Watchlist from "components/modules/Watchlist";
 
 export default function Home() {
   const [movieData, setMovieData] = useState<MovieData>({});
-  const [watchlistData, setWatchlistData] = useState<MovieData>({});
+  const [watchlistData, setWatchlistData] = useState<WatchlistData[]>(getWatchlistMovies());
+  const [filteredWatchlist, setFilteredWatchlist] = useState<WatchlistData[]>([]);
+  const [watchedList, setWatchedList] = useState<string[]>(getWatchedMovies());
   const [showWatchlist, setShowWatchlist] = useState(false);
+
+  useEffect(() => {
+    setWatchlistMovies(watchlistData);
+  }, [watchlistData]);
+
+  useEffect(() => {
+    setWatchedMovies(watchedList);
+  }, [watchedList]);
 
   return (
     <Page
-      searchHandler={showWatchlist ? setWatchlistData : setMovieData}
+      searchHandler={showWatchlist ? setFilteredWatchlist : setMovieData}
       viewToggle={showWatchlist}
       setToggle={setShowWatchlist}
+      watchlistData={watchlistData}
     >
-      <Flex flexWrap="wrap" gridGap={6} justify="center" mb={10}>
-        {movieData &&
-          "Search" in movieData &&
-          movieData["Search"].map(({ imdbID, Poster: posterUrl, Title: title }) => (
-            <MovieCard heading={title} imageUrl={posterUrl} key={imdbID} />
-          ))}
-        {!movieData["Search"] && (
-          <Stack align="center" mt={10}>
-            <Heading color="whiteAlpha.900">Welcome!</Heading>
-            <Text color="whiteAlpha.900">
-              Please start typing in the search bar above to find movies
-            </Text>
-          </Stack>
-        )}
-      </Flex>
+      <Stack align="center" spacing={6}>
+        <Heading>{showWatchlist ? "Your Watchlist" : "Movie Search"}</Heading>
+        <Divider width="50%" />
+
+        <Flex flexWrap="wrap" gridGap={6} justify="center" mb={10}>
+          {showWatchlist ? (
+            <Watchlist
+              setWatchlistData={setWatchlistData}
+              watchlistData={watchlistData}
+              filteredWatchlist={filteredWatchlist}
+              viewToggle={showWatchlist}
+              watchedList={watchedList}
+              setWatchedList={setWatchedList}
+            />
+          ) : (
+            <AllMovies
+              movieData={movieData["Search"]}
+              setWatchlistData={setWatchlistData}
+              watchlistData={watchlistData}
+              viewToggle={showWatchlist}
+              watchedList={watchedList}
+              setWatchedList={setWatchedList}
+            />
+          )}
+        </Flex>
+      </Stack>
     </Page>
   );
 }

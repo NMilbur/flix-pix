@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import AppBar from "components/elements/AppBar";
 import { CommonProps } from "constants/types";
@@ -13,7 +13,8 @@ const Page = ({
   children,
   searchHandler,
   setToggle,
-  viewToggle = false,
+  viewToggle,
+  watchlistData,
 }: PageProps & CommonProps) => {
   return (
     <Flex
@@ -22,7 +23,12 @@ const Page = ({
       height="100%"
       bgGradient={"linear(to-t, gray.900 0%, gray.600 80%, yellow.400 95%)"}
     >
-      <AppBar searchHandler={searchHandler} setToggle={setToggle} viewToggle={viewToggle} />
+      <AppBar
+        searchHandler={searchHandler}
+        setToggle={setToggle}
+        viewToggle={viewToggle}
+        watchlistData={watchlistData}
+      />
       <Container maxW="container.xl">{children}</Container>
     </Flex>
   );
