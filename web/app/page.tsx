@@ -45,11 +45,11 @@ export default function Home() {
       setToggle={setShowWatchlist}
       watchlistData={watchlistData}
     >
-      <Stack align="center" spacing={6}>
+      <Stack align="center" spacing={6} mb={10}>
         <Heading>{showWatchlist ? "Your Watchlist" : "Movie Search"}</Heading>
         <Divider width="50%" />
 
-        <Flex flexWrap="wrap" gridGap={6} justify="center" mb={10}>
+        <Flex flexWrap="wrap" gridGap={6} justify="center">
           {showWatchlist ? (
             <Watchlist
               setWatchlistData={setWatchlistData}
