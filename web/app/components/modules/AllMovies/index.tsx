@@ -1,5 +1,5 @@
 import { Heading, Stack, Text } from "@chakra-ui/react";
-import MovieCard from "components/elements/MovieCard";
+import MovieCard from "components/modules/MovieCard";
 import { MovieData, WatchlistData } from "constants/types";
 
 interface AllMoviesProps {
