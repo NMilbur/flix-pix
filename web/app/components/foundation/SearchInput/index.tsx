@@ -22,7 +22,7 @@ const SearchInput = ({ searchHandler, viewToggle = false, watchlistData }: Commo
 
       const debounce = setTimeout(() => {
         if (search.length > 0) fetchMovies();
-      }, 750);
+      }, 500);
 
       return () => clearTimeout(debounce);
     }

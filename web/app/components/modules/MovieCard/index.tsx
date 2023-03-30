@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { WatchlistData } from "constants/types";
 import { AddIcon, DeleteIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import BannerOverlay from "components/foundation/BannerOverlay";
+import ActionButton from "../../foundation/ActionButton";
+import CardWrapper from "components/foundation/CardWrapper";
 
 interface CardProps {
   setWatchlistData: (data: WatchlistData[]) => void;
@@ -60,37 +63,10 @@ const MovieCard = ({
   };
 
   return (
-    <Box
-      maxW={{ base: "full", md: "275px" }}
-      w="full"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-    >
-      <Flex
-        height="100%"
-        direction="column"
-        justify="space-between"
-        align="center"
-        position="relative"
-      >
-        {watched && (
-          <Flex
-            justify="center"
-            align="center"
-            width="100%"
-            height="10%"
-            zIndex={10}
-            bg="yellow.500"
-            opacity={0.8}
-            position="absolute"
-          >
-            <Text fontSize="2xl" color="whiteAlpha.900" fontWeight="bold">
-              Watched
-            </Text>
-          </Flex>
-        )}
-        <Image src={imageUrl} alt={title} />
+    <CardWrapper>
+      {watched && <BannerOverlay text="Watched" />}
+      <Image src={imageUrl} alt={title} />
+      <Stack width="100%">
         <Box m={2}>
           <Heading size="md" textAlign="center">
             {title}
@@ -98,38 +74,34 @@ const MovieCard = ({
         </Box>
         <Flex width="100%">
           {viewToggle && (
-            <Button
-              width="100%"
-              style={{
+            <ActionButton
+              extraStyles={{
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
               }}
-              bg="green.400"
-              onClick={() => (watched ? unmarkWatched(imdbID) : markWatched(imdbID))}
+              buttonColor="green.400"
+              clickHandler={() => (watched ? unmarkWatched(imdbID) : markWatched(imdbID))}
               title={watched ? "Mark as unwatched" : "Mark as watched"}
-            >
-              {watched ? <ViewOffIcon /> : <ViewIcon />}
-            </Button>
+              icon={watched ? <ViewOffIcon /> : <ViewIcon />}
+            />
           )}
-          <Button
-            width="100%"
-            style={{
+          <ActionButton
+            extraStyles={{
               borderTopLeftRadius: 0,
               borderTopRightRadius: 0,
               borderBottomLeftRadius: viewToggle || watched ? 0 : undefined,
             }}
-            bg={isBookmarked ? "red.500" : "gray.500"}
-            onClick={() =>
+            buttonColor={isBookmarked ? "red.500" : "gray.500"}
+            clickHandler={() =>
               isBookmarked ? removeFromWatchlist(imdbID) : addToWatchlist(title, imageUrl, imdbID)
             }
             title={isBookmarked ? "Remove from watch list" : "Add to watch list"}
-          >
-            {isBookmarked ? <DeleteIcon /> : <AddIcon />}
-          </Button>
+            icon={isBookmarked ? <DeleteIcon /> : <AddIcon />}
+          />
         </Flex>
-      </Flex>
-    </Box>
+      </Stack>
+    </CardWrapper>
   );
 };
 
